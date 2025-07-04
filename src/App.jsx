@@ -23,6 +23,7 @@ const App = () => {
     if (isValid) {
       const shortened = await shortenLink(input.trim());
       if (shortened) {
+        console.log(shortened)
         let sLink = { link: input.trim(), shortened };
         localStorage.setItem(
           "shortLinks",
@@ -203,7 +204,7 @@ const App = () => {
             <input
               type="url"
               onChange={handleInputChange}
-              
+
               required
               placeholder="shorten a link here..."
               value={input}

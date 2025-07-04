@@ -12,25 +12,23 @@ export const UseScreenWidth = () => {
 
 export const shortenLink = async (link) => {
   try {
-    const response = await fetch(
-      "https://corsproxy.io/?" + "https://cleanuri.com/api/v1/shorten",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: new URLSearchParams({
-          url: link,
-        }),
-      }
-    );
+    const response = await fetch(`http://localhost:5000/api/shorten`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ url: link }),
+      credentials: "include",
+    });
+    
     if (!response.ok) {
+      console.log(response);
       throw new Error("Failed to shorten the link");
     }
-    const data = await response.json();
-    return data.result_url;
+    const {result_url} = await response.json();
+    return result_url;
   } catch (error) {
-    console.error(error);
+    console.error("see error: ", error);
   }
 };
 export const isValidUrl = (str) => {
