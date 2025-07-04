@@ -28,23 +28,23 @@ const App = () => {
       );
     }
     const isValid = isValidUrl(text);
-    if (isValid) {
-      const shortened = await shortenLink(text);
-      if (shortened) {
-        console.log(shortened);
-        let sLink = { link: text, shortened };
-        localStorage.setItem(
-          "shortLinks",
-          JSON.stringify([...shortenedLinks, sLink])
-        );
-        setShortenedLinks((prev) => [...prev, sLink]);
-        setInput("");
-      } else {
-        console.log("something went wrong");
-      }
-    } else {
-      setInputError("Please provide a valid url that starts with http(s)");
+    if (!isValid) {
+      return setInputError(
+        "Please provide a valid url that starts with http(s)"
+      );
     }
+    const shortened = await shortenLink(text);
+    if (!shortened) {
+      return console.log("something went wrong");
+    }
+    // console.log(shortened);
+    let sLink = { link: text, shortened };
+    localStorage.setItem(
+      "shortLinks",
+      JSON.stringify([...shortenedLinks, sLink])
+    );
+    setShortenedLinks((prev) => [...prev, sLink]);
+    setInput("");
   };
   const handleInputChange = (e) => {
     setInputError("");
