@@ -33,31 +33,40 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [solution URL](https://github.com/itksweb/interactive-comment-section)
-- Live Site URL: [live site URL](https://ics-nine.vercel.app/)
+- Solution URL: [solution URL](https://github.com/itksweb/url-shortening)
+- Live Site URL: [live site URL](https://url-shortening-api-puce.vercel.app/)
 
 ## My process
 
 ### Built with
 
-- [React](https://reactjs.org/) - JS library
-- [Tailwind CSS](https://tailwindcss.com/)
--[Vite](https://vite.dev/)
+- [React](https://reactjs.org) - JS library
+- [Tailwind CSS](https://tailwindcss.com) 
+- [Vite](https://vite.dev)
+
 ### What I learned
 
-
-
 ```js
-
+const handleCopy = () => {
+  setCopied(shortened);
+  navigator.clipboard.writeText(shortened);
+  setTimeout(() => setCopied(""), 3000);
+};
 ```
 
 ```js
-
+const UseScreenWidth = () => {
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => setScreenWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  return screenWidth;
+};
 ```
-
 
 ### Useful resources
-
 
 ## Author
 
