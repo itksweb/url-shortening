@@ -12,8 +12,8 @@ const prod = process.env.FRONTEND === FRONTEND_PROD;
 const FRONTEND_URL = !prod ? FRONTEND_DEV : FRONTEND_PROD;
 const corOpt = {
   origin: [FRONTEND_DEV, FRONTEND_PROD],
-  methods: ["POST", "GET", "PUT", "PATCH", "DELETE"],
-  allowedHeaders: ["Content-Type"],
+  methods: ["POST", "GET", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
   httpequivs: {
     "Access-Control-Allow-Origin": FRONTEND_URL,
@@ -24,12 +24,7 @@ app.use(cors(corOpt));
 app.get("/", (req, res) => {
   res.send("MY URL SHORTENNING BACKEND IS WORKING");
 });
-app.options("/api/shorten", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*"); // Or specific origin
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE"); // Allowed methods
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization"); // Allowed headers
-  res.sendStatus(200); // Or 204
-});
+
 
 app.post("/api/shorten", async (req, res) => {
   const { url } = await req.body;
