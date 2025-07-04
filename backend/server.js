@@ -1,25 +1,28 @@
 const express = require("express");
 const cors = require("cors");
+const dotenv = require("dotenv");
+dotenv.config();
 const app = express();
-
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+const FRONTEND_DEV = process.env.FRONTEND_DEV;
+const FRONTEND_PROD = process.env.FRONTEND_PROD;
+const prod = process.env.FRONTEND === FRONTEND_PROD;
+const FRONTEND_URL = !prod ? FRONTEND_DEV : FRONTEND_PROD;
 const corOpt = {
-  origin: [
-    "http://localhost:5173",
-    "https://url-shortening-api-puce.vercel.app/",
-  ],
+  origin: [FRONTEND_DEV, FRONTEND_PROD],
   methods: ["POST", "GET", "PUT", "PATCH", "DELETE"],
   allowedHeaders: ["Content-Type"],
   credentials: true,
   httpequivs: {
-    "Access-Control-Allow-Origin": "http://localhost:5173",
+    "Access-Control-Allow-Origin": FRONTEND_URL,
   },
 };
 
 app.use(cors(corOpt));
 app.get("/", (req, res) => {
-  res.send("Expressed on Vercel");
+  res.send("MY URL SHORTENNING BACKEND IS WORKING");
 });
 app.post("/api/shorten", async (req, res) => {
   const { url } = await req.body;
