@@ -20,12 +20,19 @@ const App = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const isValid = isValidUrl(input.trim());
+    const text = input.trim();
+    const linkExists = shortenedLinks.map((i) => i.link).includes(text);
+    if (linkExists) {
+      return setInputError(
+        "You already have this link in your list. Enter another one"
+      );
+    }
+    const isValid = isValidUrl(text);
     if (isValid) {
-      const shortened = await shortenLink(input.trim());
+      const shortened = await shortenLink(text);
       if (shortened) {
-        console.log(shortened)
-        let sLink = { link: input.trim(), shortened };
+        console.log(shortened);
+        let sLink = { link: text, shortened };
         localStorage.setItem(
           "shortLinks",
           JSON.stringify([...shortenedLinks, sLink])
@@ -205,7 +212,6 @@ const App = () => {
             <input
               type="url"
               onChange={handleInputChange}
-
               required
               placeholder="shorten a link here..."
               value={input}
