@@ -9,7 +9,7 @@ const App = () => {
   const [shortenedLinks, setShortenedLinks] = useState([]);
   const [mobileMenuOpen, setMobilemenuOpen] = useState(false);
   const screenWidth = UseScreenWidth();
-  console.log(import.meta.env.PROD);
+  // console.log(import.meta.env.PROD);
 
   useEffect(() => {
     let sLinks = localStorage.getItem("shortLinks");
